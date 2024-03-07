@@ -12,7 +12,7 @@ from tkinter import filedialog
 
 # Define the folder path where you save the original data
 folder_path = "D:\\NAS\\temporary Storage Zone\\OIST\\Data\\Noise_temperature_measurement\\2024\\03\\Data_0301\\"
-save_file = True  # Set to True to save data in HDF5 format; set to False to plot data using pyplot
+save_data = True  # Set to True to save data in HDF5 format; set to False to plot data using pyplot
 
 #    Analysis parameters     #
 ##############################
@@ -60,7 +60,7 @@ avg_amp_dBm_list = np.array(sorted_data_list)[:,1]
 avg_amp_Vrms_list = np.array(sorted_data_list)[:,2]
 error_Vrms_list = np.array(sorted_data_list)[:,3]
 
-if save_file == True:
+if save_data == True:
     # save data in HDF5 format
     root = tk.Tk()
     root.withdraw()  # Hide the main window
