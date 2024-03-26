@@ -21,13 +21,24 @@ def convert_date_time_to_seconds(df, date_column=0, time_column=1):
     
     return time_duration_array
 
-def save_data_to_file(data, file_format):
+def save_data_to_file(data, file_format, extract_subdata=False, lower_limit=None, upper_limit=None):
     """
     Saves data to a text file in either txt or hdf5 format.
     Args:
         data (np.ndarray): Data to be saved.
         file_format (str): Format of the file ('txt' or 'hdf5').
+        extract_subdata (bool): If True, extracts a subset of data based on provided limits.
+        lower_limit (float): Lower limit for data extraction (inclusive).
+        upper_limit (float): Upper limit for data extraction (exclusive).
     """
+
+    # Extract subdata if specified
+    if extract_subdata:
+        mask = (data[:, 0] > lower_limit) & (data[:, 0] < upper_limit)
+        data = data[mask]
+        data[:,0] = data[:,0] - data[:,0][0]
+
+    # Save data based on file format
     if file_format == "txt":
         root = tk.Tk()
         root.withdraw()
@@ -46,6 +57,7 @@ def save_data_to_file(data, file_format):
                      'Heater power': data[:, 3]}
         f.addEntry(data_dict)
 
+
 # Load data from CSV files
 df_MXC_temp = pd.read_csv('C:\\Users\\HQD--CPLee\\Desktop\\MXC_temp.log', sep=',')
 df_NS_temp = pd.read_csv('C:\\Users\\HQD--CPLee\\Desktop\\NS_temp.log', sep=',')
@@ -63,4 +75,4 @@ NS_heater_power_array = df_NS_heater_power.iloc[:, 3].to_numpy()
 combined_data = np.column_stack((time_duration_array, MXC_temp_array, NS_temp_array, NS_heater_power_array))
 
 # Save combined data
-save_data_to_file(combined_data, "txt")
+save_data_to_file(combined_data, "hdf5", True, 33460, 44360)
