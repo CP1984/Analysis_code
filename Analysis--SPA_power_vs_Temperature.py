@@ -11,7 +11,7 @@ from tkinter import filedialog
 #    Analysis parameters     #
 
 # Define the folder path where you save the original data
-folder_path = "D:\\Cloud\\temporary Storage Zone\\OIST\\Data\\Noise_temperature_measurement\\2024\\03\\temp\\"
+folder_path = "D:\\NAS\\temporary Storage Zone\\OIST\\Data\\Noise_temperature_measurement\\2024\\03\\temp\\"
 save_data = False  # Set to True to save data in HDF5 format; set to False to plot data using pyplot
 
 key_word = "mK" # This keyword indicates the unit used in the file names
@@ -96,7 +96,7 @@ else:
     plt.show()
 
     plt.figure(figsize=(8, 6))
-    plt.scatter(x_list, avg_amp_Watt_list, color='blue')
+    plt.errorbar(x_list, avg_amp_Watt_list, error_Watt_list, color='blue', ecolor='black', capsize=5)
     plt.xlabel(indep_var_label + " [" + indep_var_unit+ "]")
     plt.ylabel('Power at SPA [W]')
     plt.grid(True)
