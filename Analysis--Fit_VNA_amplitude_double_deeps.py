@@ -10,6 +10,10 @@ import os
 
 folder_path = "C:\\Users\\HQD--CPLee\\Desktop\\Fit_double_peak_backGround\\hdf5\\"
 file_name = "0012-BackGroundCheck_241p57mT_maser_off.hdf5"
+pic_folder_path = "C:\\Users\\HQD--CPLee\\Desktop\\Fit_double_peak_backGround\\pic\\"
+pic_file_name = "241p57mT"
+background_folder_path = "C:\\Users\\HQD--CPLee\\Desktop\\Fit_double_peak_backGround\\background\\"
+background_file_name = "background.txt"
 
 Lozentz_deeps_lower_bound = 6.837
 Lozentz_deeps_upper_bound = 6.888
@@ -101,4 +105,13 @@ plt.plot(data_freq, fitted_bg-(fitted_bg[0]-fitted_peak_bg[0]), color = "red", l
 plt.legend()
 plt.xlabel("Frequency (GHz)")
 plt.ylabel("$S_{21}$ (dB)")
+plt.savefig(os.path.join(pic_folder_path, pic_file_name))
 plt.show()
+
+print(data_freq,fitted_bg-(fitted_bg[0]-fitted_peak_bg[0]))
+
+data = np.column_stack((data_freq*1e9, fitted_bg-(fitted_bg[0]-fitted_peak_bg[0])))
+
+output_file_path = os.path.join(background_folder_path, background_file_name)
+
+np.savetxt(output_file_path, data, delimiter=',', fmt='%.8e')
